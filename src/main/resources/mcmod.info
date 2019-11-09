@@ -1,0 +1,16 @@
+[
+{
+  "modid": "5kCustomCommands",
+  "name": "Custom Commands",
+  "description": "New Commands for Minecraft",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/5kWBassMachine",
+  "updateUrl": "",
+  "authorList": ["5kWBassMachine"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
