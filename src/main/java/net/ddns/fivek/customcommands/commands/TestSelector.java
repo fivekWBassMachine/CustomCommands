@@ -19,6 +19,7 @@
 
 package net.ddns.fivek.customcommands.commands;
 
+import net.ddns.fivek.customcommands.handlers.ConfigurationHandler;
 import net.ddns.fivek.customcommands.reference.Reference;
 import net.ddns.fivek.customcommands.utility.ICommand;
 import net.ddns.fivek.customcommands.utility.LogHelper;
@@ -36,14 +37,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestSelector implements ICommand {
-    private final String usage = "/testselector <selector|player>";
-
-    private final String usage = "/testselector <selector|player>";
-    private final boolean commandEnabled = true;    public final String description = "returns all matches for this selector";
-    private List<String> aliases = new ArrayList<String>();    public final int permissionLevel = Reference.OP_PERMISSION_LEVEL;//permission level; 0-4;
+    private String description = "returns all matches for this selector";
+    private int permissionLevel = Reference.OP_PERMISSION_LEVEL;//permission level; 0-4;
+    private String usage = "/cctestselector <selector|player|entity>";
+    private List<String> aliases = new ArrayList<String>();
+    private boolean commandEnabled = ConfigurationHandler.getConfig().get(this.getClass().getSimpleName() + ":" + this.aliases.get(0));
 
     public TestSelector() {
-        this.aliases.add("testselector");//first alias need to be the command name
+        this.aliases.add("cctestselector");//first alias need to be the command name
     }
 
     @Override
@@ -63,7 +64,7 @@ public class TestSelector implements ICommand {
 
     @Override
     public void processCommand(ICommandSender sender, String[] arguments) {
-        LogHelper.info(sender.getCommandSenderName() + " executed " + aliases.get(0) + " with " + Utils.arrayToString(arguments));
+        LogHelper.info(sender.getCommandSenderName() + " executed " + aliases.get(0) + " " + Utils.arrayToString(arguments));
         boolean senderIsServer = (sender.getClass() == DedicatedServer.getServer().getClass());
         if (arguments.length == 0) {
             sender.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + usage));
@@ -104,8 +105,8 @@ public class TestSelector implements ICommand {
                     }
                     break;
                 default:
-                    ArrayList<String> playerDisplayNames = new ArrayList<>();
-                    ArrayList<String> playerSenderNames = new ArrayList<>();
+                    ArrayList<String> playerDisplayNames = new ArrayList<String>();
+                    ArrayList<String> playerSenderNames = new ArrayList<String>();
                     for (EntityPlayer playerEntity : (ArrayList<EntityPlayer>) world.playerEntities) {
                         playerDisplayNames.add(playerEntity.getDisplayName());
                         playerSenderNames.add(playerEntity.getCommandSenderName());
@@ -148,6 +149,11 @@ public class TestSelector implements ICommand {
     @Override
     public int getPermissions() {
         return (this.commandEnabled ? this.permissionLevel : -1);
+    }
+
+    @Override
+    public String getDescription() {
+        return this.description;
     }
 
     private void processEntityCommand(ICommandSender sender, Entity loadedEntityList) {

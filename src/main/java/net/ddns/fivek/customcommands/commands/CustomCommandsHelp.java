@@ -26,16 +26,17 @@ import net.ddns.fivek.customcommands.utility.Utils;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class CustomCommandsHelp implements ICommand {
-    public final String description = "displays help text";
-    public final int permissionLevel = 0;//permission level; 0-4;
-    private final String usage = "/cchelp [command]";
-    private final boolean commandEnabled = true;
+    private String description = "displays help texts";
+    private int permissionLevel = 0;//permission level; 0-4;
+    private String usage = "/cchelp [command]";
+    private boolean commandEnabled = true;
     private List<String> aliases = new ArrayList<String>();
 
     public CustomCommandsHelp() {
@@ -59,12 +60,21 @@ public class CustomCommandsHelp implements ICommand {
 
     @Override
     public void processCommand(ICommandSender sender, String[] arguments) {
-        LogHelper.info(sender.getCommandSenderName() + " executed " + aliases.get(0) + Utils.arrayToString(arguments));
+        LogHelper.info(sender.getCommandSenderName() + " executed " + aliases.get(0) + " " + Utils.arrayToString(arguments));
         boolean isServer = (sender.getClass() == DedicatedServer.getServer().getClass());
         if (arguments.length == 0) {
             Iterator it = CommandRegistrator.help.iterator();
             while (it.hasNext()) {
                 sender.addChatMessage(new ChatComponentText((isServer ? ((String) it.next()).replaceAll("(§[0-9a-fk-or])", "") : (String) it.next())));
+            }
+        } else {
+            if (CommandRegistrator.getCommands().keySet().contains(arguments[0])) {
+                ICommand command = CommandRegistrator.getCommands().get(arguments[0]);
+                sender.addChatMessage(new ChatComponentText((isServer ? "" : EnumChatFormatting.DARK_RED) + command.getCommandUsage(null)));
+                sender.addChatMessage(new ChatComponentText((isServer ? "" : EnumChatFormatting.RED) + command.getDescription()));
+                sender.addChatMessage(new ChatComponentText((isServer ? "" : EnumChatFormatting.RED) + "Aliases: " + Utils.arrayToString(command.getCommandAliases())));
+            } else {
+                sender.addChatMessage(new ChatComponentText((isServer ? "" : EnumChatFormatting.RED) + "Unknown command. Try /" + this.aliases.get(0) + " for a list of commands"));
             }
         }
     }
@@ -92,5 +102,10 @@ public class CustomCommandsHelp implements ICommand {
     @Override
     public int getPermissions() {
         return (this.commandEnabled ? this.permissionLevel : -1);
+    }
+
+    @Override
+    public String getDescription() {
+        return this.description;
     }
 }

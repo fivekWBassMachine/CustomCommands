@@ -23,20 +23,17 @@ import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.ddns.fivek.customcommands.reference.Reference;
 import net.ddns.fivek.customcommands.utility.LogHelper;
-import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ConfigurationHandler {
 
     private static String CATEGORY_COMMANDS = "commands";
     private static Configuration configuration;
-    private static ConfigCategory general;
     private static List<String> commands = new ArrayList<String>();
+    private static Map<String, Boolean> config;
 
     public static void init(String configDir, ArrayList<String> commands) {
         if (configuration == null) {
@@ -46,12 +43,17 @@ public class ConfigurationHandler {
         }
     }
 
+    public static Map<String, Boolean> getConfig() {
+        return config;
+    }
+
     private static void loadConfiguration() {
         Iterator it = commands.iterator();
         while (it.hasNext()) {
             String commandName = (String) it.next();
             LogHelper.info("Setup config for " + commandName);
-            configuration.getBoolean(commandName, CATEGORY_COMMANDS, true, "Enable or disable this command.");
+            config = new HashMap<String, Boolean>();
+            config.put(commandName, configuration.getBoolean(commandName, CATEGORY_COMMANDS, true, "Enable or disable this command."));
         }
         if (configuration.hasChanged()) {
             configuration.save();

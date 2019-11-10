@@ -21,4 +21,6 @@ package net.ddns.fivek.customcommands.utility;
 
 public interface ICommand extends net.minecraft.command.ICommand {
     int getPermissions();
+
+    String getDescription();
 }

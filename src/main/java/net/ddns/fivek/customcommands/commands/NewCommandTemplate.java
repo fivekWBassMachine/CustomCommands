@@ -19,6 +19,7 @@
 
 package net.ddns.fivek.customcommands.commands;
 
+import net.ddns.fivek.customcommands.handlers.ConfigurationHandler;
 import net.ddns.fivek.customcommands.reference.Reference;
 import net.ddns.fivek.customcommands.utility.ICommand;
 import net.ddns.fivek.customcommands.utility.LogHelper;
@@ -30,11 +31,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewCommandTemplate implements ICommand {
-    public final String description = "description";
-    public final int permissionLevel = Reference.OP_PERMISSION_LEVEL;//permission level; 0-4;
-    private final String usage = "/commandtemplate <required parameter> [optional parameter]";
-    private final boolean commandEnabled = true;
+    private String description = "description";
+    private int permissionLevel = Reference.OP_PERMISSION_LEVEL;//permission level; 0-4;
+    private String usage = "/commandtemplate <required parameter> [optional parameter]";
     private List<String> aliases = new ArrayList<String>();
+    private boolean commandEnabled = ConfigurationHandler.getConfig().get(this.getClass().getSimpleName() + ":" + this.aliases.get(0));
 
     public NewCommandTemplate() {
         this.aliases.add("commandtemplate");//first alias need to be the command name
@@ -57,7 +58,7 @@ public class NewCommandTemplate implements ICommand {
 
     @Override
     public void processCommand(ICommandSender sender, String[] arguments) {
-        LogHelper.info(sender.getCommandSenderName() + " executed " + aliases.get(0) + " with " + Utils.arrayToString(arguments));
+        LogHelper.info(sender.getCommandSenderName() + " executed " + aliases.get(0) + " " + Utils.arrayToString(arguments));
         boolean senderIsServer = (sender.getClass() == DedicatedServer.getServer().getClass());
         //dosomething
     }
@@ -85,5 +86,10 @@ public class NewCommandTemplate implements ICommand {
     @Override
     public int getPermissions() {
         return (this.commandEnabled ? this.permissionLevel : -1);
+    }
+
+    @Override
+    public String getDescription() {
+        return this.description;
     }
 }

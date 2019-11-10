@@ -40,8 +40,10 @@ public class Utils {
     public static String arrayToString(List array) {
         Iterator it = array.iterator();
         String response = "";
+        int i = 0;
         while (it.hasNext()) {
-            response += " " + it.next().toString();
+            response += (i == 0 ? "" : " ") + it.next().toString();
+            ++i;
         }
         return response;
     }
