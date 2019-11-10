@@ -17,19 +17,8 @@
  * along with CustomCommands.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.ddns.fivek.customcommands.reference;
+package net.ddns.fivek.customcommands.utility;
 
-import net.minecraft.server.MinecraftServer;
-
-public class Reference {
-    public static final String MOD_ID = "5kCustomCommands";
-    public static final String MOD_NAME = "Custom Commands";
-    public static final String MOD_VERSION = "0.0.1";
-    public static final String MOD_MC_VERSION = "1.7.10";
-    public static final boolean MOD_CAN_BE_DEACTIVATED = true;
-
-    public static final String CONFIG_FILE = "CustomCommands.cfg";
-    public static final String PROXY_CLIENT = "net.ddns.fivek.customcommands.proxy.ClientProxy";
-    public static final String PROXY_SERVER = "net.ddns.fivek.customcommands.proxy.ServerProxy";
-    public static final int OP_PERMISSION_LEVEL = MinecraftServer.getServer().getOpPermissionLevel();
+public interface ICommand extends net.minecraft.command.ICommand {
+    int getPermissions();
 }

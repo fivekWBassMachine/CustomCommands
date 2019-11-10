@@ -22,28 +22,44 @@ package net.ddns.fivek.customcommands.handlers;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.ddns.fivek.customcommands.reference.Reference;
+import net.ddns.fivek.customcommands.utility.LogHelper;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class ConfigurationHandler {
 
-    public static final String COMMANDS = "commands";
+    private static String CATEGORY_COMMANDS = "commands";
     private static Configuration configuration;
     private static ConfigCategory general;
+    private static List<String> commands = new ArrayList<String>();
 
-    public static void init(String configDir) {
+    public static void init(String configDir, ArrayList<String> commands) {
         if (configuration == null) {
             configuration = new Configuration(new File(configDir + '/' + Reference.CONFIG_FILE));
+            ConfigurationHandler.commands = commands;
             loadConfiguration();
         }
     }
 
     private static void loadConfiguration() {
-        if (configuration.hasChanged()) {
-            general = configuration.getCategory(COMMANDS);
+        Iterator it = commands.iterator();
+        while (it.hasNext()) {
+            String commandName = (String) it.next();
+            LogHelper.info("Setup config for " + commandName);
+            configuration.getBoolean(commandName, CATEGORY_COMMANDS, true, "Enable or disable this command.");
         }
+        if (configuration.hasChanged()) {
+            configuration.save();
+        }
+    }
+
+    public static Configuration getConfiguration() {
+        return configuration;
     }
 
     @SubscribeEvent
@@ -52,6 +68,4 @@ public class ConfigurationHandler {
             loadConfiguration();
         }
     }
-
-    public static Configuration getConfiguration() { return configuration; }
 }

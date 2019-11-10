@@ -22,10 +22,14 @@ package net.ddns.fivek.customcommands.utility;
 import cpw.mods.fml.common.FMLLog;
 import net.ddns.fivek.customcommands.reference.Reference;
 import org.apache.logging.log4j.Level;
+import scala.util.matching.Regex;
 
 public class LogHelper {
     private static void log(Level logLevel, Object object) {
-        FMLLog.log(Reference.MOD_ID, logLevel, String.valueOf(object));
+        final StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        String className[] = stackTrace[3].getClassName().split(Regex.quote("."));
+        String methodName = stackTrace[3].getMethodName();
+        FMLLog.log(Reference.MOD_ID, logLevel, className[(className.length - 1)] + "." + methodName + ": " + String.valueOf(object));
     }
 
     public static void all(Object object) {
@@ -41,6 +45,7 @@ public class LogHelper {
         log(Level.FATAL, object);
     }
     public static void info(Object object) {
+
         log(Level.INFO, object);
     }
     public static void off(Object object) {
