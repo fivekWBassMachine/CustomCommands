@@ -77,30 +77,35 @@ public class TestSelector implements ICommand {
                     if (senderIsServer) {
                         sender.addChatMessage(new ChatComponentText("@s: " + sender.getCommandSenderName()));
                     } else {
-                        /*DEBUG*/sender.addChatMessage(new ChatComponentText((senderIsServer ? "" : EnumChatFormatting.YELLOW) + "@s: " + sender.getCommandSenderName()));
+                        /*DEBUG*/
+                        sender.addChatMessage(new ChatComponentText((senderIsServer ? "" : EnumChatFormatting.YELLOW) + "@s: " + sender.getCommandSenderName()));
                         this.processPlayerCommand(sender);
                     }
                     break;
                 case "@a":
                     for (EntityPlayer playerEntity : (ArrayList<EntityPlayer>) world.playerEntities) {
-                        /*DEBUG*/sender.addChatMessage(new ChatComponentText((senderIsServer ? "" : EnumChatFormatting.YELLOW) + "@a: " + playerEntity));
+                        /*DEBUG*/
+                        sender.addChatMessage(new ChatComponentText((senderIsServer ? "" : EnumChatFormatting.YELLOW) + "@a: " + playerEntity));
                         this.processPlayerCommand(sender, playerEntity);
                     }
                     break;
                 case "@p":
                     ChunkCoordinates coordinates = sender.getPlayerCoordinates();
                     EntityPlayer nearestPlayer = world.getClosestPlayer(coordinates.posX, coordinates.posY, coordinates.posZ, -1);
-                    /*DEBUG*/sender.addChatMessage(new ChatComponentText((senderIsServer ? "" : EnumChatFormatting.YELLOW) + "@p: " + nearestPlayer.getDisplayName()));
+                    /*DEBUG*/
+                    sender.addChatMessage(new ChatComponentText((senderIsServer ? "" : EnumChatFormatting.YELLOW) + "@p: " + nearestPlayer.getDisplayName()));
                     this.processPlayerCommand(sender, nearestPlayer);
                     break;
                 case "@r":
                     EntityPlayer randomPlayer = (EntityPlayer) world.playerEntities.get((int) (Math.random() * world.playerEntities.size()));
-                    /*DEBUG*/sender.addChatMessage(new ChatComponentText((senderIsServer ? "" : EnumChatFormatting.YELLOW) + "@r: " + randomPlayer.getDisplayName()));
+                    /*DEBUG*/
+                    sender.addChatMessage(new ChatComponentText((senderIsServer ? "" : EnumChatFormatting.YELLOW) + "@r: " + randomPlayer.getDisplayName()));
                     this.processPlayerCommand(sender, randomPlayer);
                     break;
                 case "@e":
                     for (Entity loadedEntityList : (ArrayList<Entity>) world.loadedEntityList) {
-                        /*DEBUG*/sender.addChatMessage(new ChatComponentText((senderIsServer ? "" : EnumChatFormatting.YELLOW) + "@e: " + loadedEntityList));
+                        /*DEBUG*/
+                        sender.addChatMessage(new ChatComponentText((senderIsServer ? "" : EnumChatFormatting.YELLOW) + "@e: " + loadedEntityList));
                         this.processEntityCommand(sender, loadedEntityList);
                     }
                     break;
@@ -115,7 +120,8 @@ public class TestSelector implements ICommand {
                     if (pos == -1) pos = playerSenderNames.indexOf(argumentList.get(0));
                     if (pos > -1) {
                         EntityPlayer player = (EntityPlayer) world.playerEntities.get(pos);
-                        /*DEBUG*/sender.addChatMessage(new ChatComponentText((senderIsServer ? "" : EnumChatFormatting.YELLOW) + argumentList.get(0)));
+                        /*DEBUG*/
+                        sender.addChatMessage(new ChatComponentText((senderIsServer ? "" : EnumChatFormatting.YELLOW) + argumentList.get(0)));
                         this.processPlayerCommand(sender, player);
                     } else {
                         sender.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "That player cannot be found"));

@@ -1,20 +1,20 @@
 /*
- * Copyright 2019 5kWBassMachine aka fivek <5kwbassmachine@gmail.com>
+ * Copyright 2019 5kWBassMachine <5kWBassMachine@gmail.com> <fivek.ddns.net>
  *
- * This file is part of MinecraftModTemplate.
+ * This file is part of CustomCommands.
  *
- * MinecraftModTemplate is free software: you can redistribute it and/or modify
+ * CustomCommands is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * MinecraftModTemplate is distributed in the hope that it will be useful,
+ * CustomCommands is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with MinecraftCommand.  If not, see <https://www.gnu.org/licenses/>.
+ * along with CustomCommands.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package net.ddns.fivek.customcommands;
@@ -27,7 +27,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import net.ddns.fivek.customcommands.proxy.CommonProxy;
 import net.ddns.fivek.customcommands.reference.Reference;
-import net.ddns.fivek.customcommands.utility.LogHelper;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, acceptedMinecraftVersions = Reference.MOD_MC_VERSION, canBeDeactivated = Reference.MOD_CAN_BE_DEACTIVATED, acceptableRemoteVersions = "*")
 public class CustomCommands {
