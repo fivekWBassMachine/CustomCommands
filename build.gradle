@@ -17,6 +17,9 @@ buildscript {
 
 apply plugin: 'forge'
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 version = "0.0.2"
 group = "net.ddns.fivek.customcommands" /*
  * Copyright 2019 5kWBassMachine <5kWBassMachine@gmail.com> <fivek.ddns.net>
